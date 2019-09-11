@@ -1,0 +1,102 @@
+################################################################################
+# Library registration
+################################################################################
+$(eval $(call addlib_s,liblua,$(CONFIG_LIBLUA)))
+
+################################################################################
+# Sources
+################################################################################
+LIBLUA_VERSION=5.3.5
+LIBLUA_TARBALL=lua-$(LIBLUA_VERSION)
+LIBLUA_URL=https://www.lua.org/ftp/$(LIBLUA_TARBALL).tar.gz
+LIBLUA_PATCHDIR=$(LIBLUA_BASE)/patches
+
+$(eval $(call fetch,liblua,$(LIBLUA_URL)))
+$(eval $(call patch,liblua,$(LIBLUA_PATCHDIR),lua-$(LIBLUA_VERSION)))
+
+################################################################################
+# Helpers
+################################################################################
+LIBLUA_SRCS_BASE=$(LIBLUA_ORIGIN)/$(LIBLUA_TARBALL)/src
+
+################################################################################
+# Library includes
+################################################################################
+# Put public headers of the library to a public folder and export them globally.
+# The prepare step below takes care of populating the folder.
+$(call mk_sub_build_dir,liblua/include)
+CINCLUDES-$(CONFIG_LIBLUA)   += -I$(LIBLUA_BUILD)/include
+CPPINCLUDES-$(CONFIG_LIBLUA) += -I$(LIBLUA_BUILD)/include
+
+# Private headers
+LIBLUA_CINCLUDES-y += -I$(LIBLUA_SRCS_BASE)
+
+################################################################################
+# Compilation unit
+################################################################################
+LIBLUA_CFLAGS-y += -DLUA_COMPAT_5_2
+
+# Main loop
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lua.c
+
+# CORE_O
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lapi.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lcode.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lctype.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ldebug.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ldo.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ldump.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lfunc.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lgc.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/llex.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lmem.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lobject.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lopcodes.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lparser.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lstate.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lstring.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ltable.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ltm.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lundump.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lvm.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lzio.c
+
+# LIB_O
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lauxlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lbaselib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lbitlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lcorolib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ldblib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/liolib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lmathlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/loslib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lstrlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ltablib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lutf8lib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/loadlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/linit.c
+
+
+################################################################################
+# libray API headers
+################################################################################
+$(LIBLUA_SRCS_BASE)/%.h: $(LIBLUA_BUILD)/.origin
+	@# empty recipe to enforce dependency to archive extraction
+
+$(LIBLUA_BUILD)/include/%.h: $(LIBLUA_SRCS_BASE)/%.h
+	$(call build_cmd,LN,liblua,$@,\
+	ln -sf $< $@)
+
+$(LIBLUA_SRCS_BASE)/%.hpp: $(LIBLUA_BUILD)/.origin
+	@# empty recipe to enforce dependency to archive extraction
+
+$(LIBLUA_BUILD)/include/%.hpp: $(LIBLUA_SRCS_BASE)/%.hpp
+	$(call build_cmd,LN,liblua,$@,\
+	ln -sf $< $@)
+
+# TO_INC
+UK_PREPARE += $(LIBLUA_BUILD)/include/lua.h
+UK_PREPARE += $(LIBLUA_BUILD)/include/luaconf.h
+UK_PREPARE += $(LIBLUA_BUILD)/include/lualib.h
+UK_PREPARE += $(LIBLUA_BUILD)/include/lauxlib.h
+UK_PREPARE += $(LIBLUA_BUILD)/include/lua.hpp
