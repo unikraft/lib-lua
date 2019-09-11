@@ -1,0 +1,4 @@
+config LIBLUA
+	bool "The Lua programming language"
+	default n
+	depends on HAVE_LIBC
