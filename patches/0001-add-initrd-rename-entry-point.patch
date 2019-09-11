@@ -1,0 +1,42 @@
+--- a/src/lua.c	2017-04-19 19:29:57.000000000 +0200
++++ b/src/lua.c	2019-09-03 13:36:09.437807890 +0200
+@@ -6,6 +6,8 @@
+ 
+ #define lua_c
+ 
++#include <uk/plat/memory.h>
++
+ #include "lprefix.h"
+ 
+ 
+@@ -555,6 +557,9 @@
+   int argc = (int)lua_tointeger(L, 1);
+   char **argv = (char **)lua_touserdata(L, 2);
+   int script;
++  struct ukplat_memregion_desc img;
++  char *cstr;
++  
+   int args = collectargs(argv, &script);
+   luaL_checkversion(L);  /* check that interpreter has correct version */
+   if (argv[0] && argv[0][0]) progname = argv[0];
+@@ -581,6 +586,11 @@
+     return 0;
+   if (args & has_i)  /* -i option? */
+     doREPL(L);  /* do read-eval-print loop */
++  /* see if script is available from initrd */
++  else if (ukplat_memregion_find_initrd0(&img) >= 0) {
++    cstr = (char *)img.base;
++    dostring(L, cstr, "initrd");
++  }
+   else if (script == argc && !(args & (has_e | has_v))) {  /* no arguments? */
+     if (lua_stdin_is_tty()) {  /* running in interactive mode? */
+       print_version();
+@@ -593,7 +603,7 @@
+ }
+ 
+ 
+-int main (int argc, char **argv) {
++int lua_main (int argc, char **argv) {
+   int status, result;
+   lua_State *L = luaL_newstate();  /* create state */
+   if (L == NULL) {
