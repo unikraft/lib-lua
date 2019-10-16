@@ -26,7 +26,7 @@ LIBLUA_SRCS_BASE=$(LIBLUA_ORIGIN)/$(LIBLUA_TARBALL)/src
 # The prepare step below takes care of populating the folder.
 $(call mk_sub_build_dir,liblua/include)
 CINCLUDES-$(CONFIG_LIBLUA)   += -I$(LIBLUA_BUILD)/include
-CPPINCLUDES-$(CONFIG_LIBLUA) += -I$(LIBLUA_BUILD)/include
+CXXINCLUDES-$(CONFIG_LIBLUA) += -I$(LIBLUA_BUILD)/include
 
 # Private headers
 LIBLUA_CINCLUDES-y += -I$(LIBLUA_SRCS_BASE)
