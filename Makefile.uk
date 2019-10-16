@@ -93,6 +93,9 @@ LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/linit.c
 ################################################################################
 # Libray API headers
 ################################################################################
+# Make sure that make does not treat the headers from the archive as intermediate
+.PRECIOUS: $(LIBLUA_SRCS_BASE)/%.h
+
 $(LIBLUA_SRCS_BASE)/%.h: $(LIBLUA_BUILD)/.origin
 	@# empty recipe to enforce dependency to archive extraction
 
