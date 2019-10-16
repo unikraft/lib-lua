@@ -6,7 +6,7 @@ menuconfig LIBLUA
         select UKUNISTD
 
 if LIBLUA
-	config LIBLUA_MAIN_FUNCTION
-       		bool "Provide main function"
-        	default y
+   config LIBLUA_MAIN_FUNCTION
+       bool "Provide main function"
+       default y
 endif

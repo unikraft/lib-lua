@@ -32,11 +32,24 @@ CXXINCLUDES-$(CONFIG_LIBLUA) += -I$(LIBLUA_BUILD)/include
 LIBLUA_CINCLUDES-y += -I$(LIBLUA_SRCS_BASE)
 
 ################################################################################
-# Compilation unit
+# Glue code
 ################################################################################
-LIBLUA_CFLAGS-y += -DLUA_COMPAT_5_2
+LIBLUA_SRCS-$(CONFIG_LIBLUA_MAIN_FUNCTION) += $(LIBLUA_BASE)/main.c
 
+################################################################################
+# Library flags
+################################################################################
+LIBLUA_SUPPRESS_FLAGS += -Wno-implicit-function-declaration
+LIBLUA_FLAGS += -DLUA_COMPAT_5_2
+
+LIBLUA_CFLAGS-y += $(LIBLUA_FLAGS) $(LIBLUA_SUPPRESS_FLAGS)
+LIBLUA_CXXFLAGS-y += $(LIBLUA_FLAGS) $(LIBLUA_SUPPRESS_FLAGS)
+
+################################################################################
+# Sources
+################################################################################
 # Main loop
+LIBLUA_LUA_FLAGS-y += -Dmain=lua_main
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lua.c
 
 # CORE_O
@@ -78,7 +91,7 @@ LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/linit.c
 
 
 ################################################################################
-# libray API headers
+# Libray API headers
 ################################################################################
 $(LIBLUA_SRCS_BASE)/%.h: $(LIBLUA_BUILD)/.origin
 	@# empty recipe to enforce dependency to archive extraction
