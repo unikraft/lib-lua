@@ -39,7 +39,7 @@ LIBLUA_SRCS-$(CONFIG_LIBLUA_MAIN_FUNCTION) += $(LIBLUA_BASE)/main.c
 ################################################################################
 # Library flags
 ################################################################################
-LIBLUA_SUPPRESS_FLAGS += -Wno-implicit-function-declaration
+LIBLUA_SUPPRESS_FLAGS += -Wno-implicit-function-declaration -Wno-unused-function
 LIBLUA_FLAGS += -DLUA_COMPAT_5_2
 
 LIBLUA_CFLAGS-y += $(LIBLUA_FLAGS) $(LIBLUA_SUPPRESS_FLAGS)
