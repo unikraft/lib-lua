@@ -4,6 +4,7 @@ menuconfig LIBLUA
         select LIBNEWLIBC
         select LIBUKTIME
         select UKUNISTD
+        select LIBUKSIGNAL
 
 if LIBLUA
    config LIBLUA_MAIN_FUNCTION
