@@ -6,7 +6,7 @@ $(eval $(call addlib_s,liblua,$(CONFIG_LIBLUA)))
 ################################################################################
 # Sources
 ################################################################################
-LIBLUA_VERSION=5.3.5
+LIBLUA_VERSION=5.4.3
 LIBLUA_TARBALL=lua-$(LIBLUA_VERSION)
 LIBLUA_URL=https://www.lua.org/ftp/$(LIBLUA_TARBALL).tar.gz
 LIBLUA_PATCHDIR=$(LIBLUA_BASE)/patches
@@ -77,16 +77,15 @@ LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lzio.c
 # LIB_O
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lauxlib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lbaselib.c
-LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lbitlib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lcorolib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ldblib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/liolib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lmathlib.c
+LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/loadlib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/loslib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lstrlib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/ltablib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/lutf8lib.c
-LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/loadlib.c
 LIBLUA_SRCS-y += $(LIBLUA_SRCS_BASE)/linit.c
 
 
