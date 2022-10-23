@@ -6,7 +6,7 @@ $(eval $(call addlib_s,liblua,$(CONFIG_LIBLUA)))
 ################################################################################
 # Sources
 ################################################################################
-LIBLUA_VERSION=5.4.3
+LIBLUA_VERSION=5.4.4
 LIBLUA_TARBALL=lua-$(LIBLUA_VERSION)
 LIBLUA_URL=https://www.lua.org/ftp/$(LIBLUA_TARBALL).tar.gz
 LIBLUA_PATCHDIR=$(LIBLUA_BASE)/patches
