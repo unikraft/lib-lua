@@ -32,7 +32,7 @@
 -    if (lua_stdin_is_tty()) {  /* running in interactive mode? */
 +  /* see if script is available from initrd */
 +  else if (ukplat_memregion_find_initrd0(&img) >= 0) {
-+    cstr = (char *)img.base;
++    cstr = (char *)img.pbase;
 +    dostring(L, cstr, "initrd");
 +  }
 +  else {
