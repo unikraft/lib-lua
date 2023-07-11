@@ -1,0 +1,5 @@
+name        := "lua"
+description := "A powerful, efficient, lightweight, embeddable scripting language."
+homepage    := "https://www.lua.org/"
+license     := "MIT"
+version     := 5.4.4 sha256:164c7849653b80ae67bec4b7473b884bf5cc8d2dca05653475ec2ed27b9ebf61 https://www.lua.org/ftp/lua-5.4.4.tar.gz
