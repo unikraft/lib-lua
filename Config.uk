@@ -1,7 +1,7 @@
 menuconfig LIBLUA
 	bool "The Lua programming language"
 	default n
-        select LIBNEWLIBC
+        select LIBMUSL
         select LIBUKTIME
         select UKUNISTD
         select LIBUKSIGNAL
