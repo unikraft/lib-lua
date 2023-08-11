@@ -24,7 +24,7 @@ LIBLUA_SRCS_BASE=$(LIBLUA_ORIGIN)/$(LIBLUA_TARBALL)/src
 ################################################################################
 # Put public headers of the library to a public folder and export them globally.
 # The prepare step below takes care of populating the folder.
-$(call mk_sub_build_dir,liblua/include)
+$(call mk_sub_libbuild_dir,liblua,include)
 CINCLUDES-$(CONFIG_LIBLUA)   += -I$(LIBLUA_BUILD)/include
 CXXINCLUDES-$(CONFIG_LIBLUA) += -I$(LIBLUA_BUILD)/include
 
