@@ -1,13 +1,21 @@
-menuconfig LIBLUA
-	bool "The Lua programming language"
-	default n
-        select LIBMUSL
-        select LIBUKTIME
-        select UKUNISTD
-        select LIBUKSIGNAL
+menu "Library configuration"
+
+config LIBLUA
+    bool "Lua scripting language"
+    default n
+    select LIBMUSL
+    select LIBUKTIME
+    select UKUNISTD
+    select LIBUKSIGNAL
+    help
+      The Lua scripting language library (v5.4.8).
 
 if LIBLUA
-   config LIBLUA_MAIN_FUNCTION
-       bool "Provide main function"
-       default y
+config LIBLUA_MAIN_FUNCTION
+    bool "Provide main function"
+    default y
+    help
+      Provide a default main() function.
 endif
+
+endmenu
